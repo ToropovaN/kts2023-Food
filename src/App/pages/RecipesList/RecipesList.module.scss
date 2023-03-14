@@ -1,0 +1,57 @@
+@import "../../../styles/variables.scss";
+
+.recipesList {
+  &_content {
+    position: absolute;
+    width: 100%;
+  }
+  &_header {
+    padding: 24px 32px 0 32px;
+    max-width: 547px;
+    margin: auto;
+  }
+  &_categories {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    row-gap: 7px;
+    margin-bottom: 17px;
+  }
+  &_sort {
+    display: grid;
+    grid-template-columns: 20px 100px;
+    align-items: center;
+    & > div {
+      max-width: 100px;
+    }
+  }
+  &_sortButton {
+    color: $TextLightColor;
+    background-color: transparent;
+    margin-bottom: 3px;
+    &-rotate {
+      transform: rotate(-180deg);
+    }
+  }
+  &_loading {
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media (min-width: 375px) and (max-width: 546px) {
+}
+
+@media (max-width: 374px) {
+  .recipesList {
+    &_categories {
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    &_loading > svg {
+      height: 120px;
+    }
+  }
+}

@@ -1,0 +1,25 @@
+@import "../../../styles/variables.scss";
+
+.favourites {
+  &_content {
+    position: absolute;
+    width: 100%;
+  }
+  & h2 {
+    text-align: center;
+    margin: 0;
+    font-size: 27px;
+    font-weight: 500;
+    line-height: 136%;
+    color: $PrimaryColor;
+    border-bottom: 3px dotted $Grabient-B;
+    margin: 44px 0;
+    padding: 0 24px 5px 24px;
+  }
+}
+
+@media (max-width: 374px) {
+  .favourites h2 {
+    margin: 28px 0;
+  }
+}

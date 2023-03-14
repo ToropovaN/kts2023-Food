@@ -1,0 +1,104 @@
+@import "../../styles/variables.scss";
+
+.multi-dropdown {
+  cursor: pointer;
+  font-weight: 400;
+  font-family: "Avenir";
+  font-size: 12px;
+  position: relative;
+  letter-spacing: 0.01em;
+  &:hover > &_list {
+    display: block;
+  }
+  &_optionCheckbox {
+    display: none;
+    & + label {
+      background-color: $OptionBackground;
+    }
+    &:checked + label {
+      background-color: $ChackedOptionBackground;
+    }
+  }
+  &_label {
+    border-radius: 7px;
+    display: block;
+    width: calc(100% - 38px);
+    padding: 10px 19px;
+    background: -webkit-linear-gradient(0deg, $Grabient-A 0%, $Grabient-B 100%);
+    margin-bottom: 3px;
+    &-disabled {
+      background: -webkit-linear-gradient(
+        0deg,
+        $GrabientDisabled-A 0%,
+        $GrabientDisabled-B 100%
+      );
+      color: $TextLightColor;
+    }
+  }
+  &_labelText {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  &_labelPlaceholder {
+    color: $TextPlaceholderColor;
+    opacity: 0.5;
+  }
+  &_list {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 182px;
+    overflow: scroll;
+    border-radius: 7px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px $ShadowColor;
+    &:hover {
+      width: calc(100% + 10px);
+    }
+  }
+  &_scroll {
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    &::-webkit-scrollbar {
+      background-color: $Background;
+      width: 0px;
+    }
+    &:hover {
+      &::-webkit-scrollbar {
+        width: 10px;
+      }
+      &::-webkit-scrollbar-thumb {
+        border: 4px solid transparent;
+        border-radius: 5px;
+        box-shadow: $TextLightColor inset 0 0 0 10px;
+      }
+    }
+  }
+  &_optionCheckboxLabel {
+    padding: 10px;
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+@media (min-width: 547px) {
+  .multi-dropdown {
+    width: 236px;
+  }
+}
+
+@media (min-width: 375px) and (max-width: 546px) {
+  .multi-dropdown {
+    width: 176px;
+  }
+}
+
+@media (max-width: 374px) {
+  .multi-dropdown {
+    width: 126px;
+  }
+}

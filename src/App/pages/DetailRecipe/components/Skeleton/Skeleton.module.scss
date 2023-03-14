@@ -1,0 +1,62 @@
+@import "../../../../../styles/variables.scss";
+
+@mixin shining {
+  background: linear-gradient(
+    45deg,
+    #d9d9d9 20%,
+    #f0f0f0 40%,
+    #f0f0f0 60%,
+    #d9d9d9 80%
+  );
+  background-size: 200% auto;
+  animation: shine 1s linear infinite;
+}
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+.skeleton {
+  &_title {
+    @include shining();
+    height: 27px;
+    width: 80%;
+    border-radius: 10px;
+    margin: 4px 0 22px 0;
+  }
+  &_stats {
+    @include shining();
+    height: 14px;
+    width: 76px;
+    border-radius: 7px;
+  }
+  &_textBlock {
+    margin-top: 26px;
+  }
+  &_text {
+    @include shining();
+    height: 14px;
+    margin: 8px 0;
+    width: 100%;
+    border-radius: 7px;
+  }
+}
+
+@media (max-width: 374px) {
+  .skeleton {
+    &_title {
+      height: 20px;
+      width: 60%;
+    }
+    & h2 {
+      font-size: 18px;
+    }
+    &_info {
+      padding-top: 30px;
+    }
+    &_smallCardsBlock {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "kts2023-food",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/ToropovaN/kts2023-Food.git",
+  "author": "ToropovaN <47456362+ToropovaN@users.noreply.github.com>",
+  "license": "MIT"
+}

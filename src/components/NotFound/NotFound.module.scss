@@ -1,0 +1,12 @@
+.notFound {
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 374px) {
+  .notFound > svg {
+    height: 120px;
+  }
+}

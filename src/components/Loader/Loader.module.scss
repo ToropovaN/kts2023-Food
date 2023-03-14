@@ -1,0 +1,46 @@
+@import "../../styles/variables.scss";
+
+.loader {
+  display: block;
+  border-radius: 50%;
+  animation: rotating 0.5s linear infinite;
+  &-s {
+    width: 14px;
+    height: 14px;
+    border: 3px solid $PrimaryColor;
+    border-right: 3px solid transparent;
+    &.white {
+      border: 3px solid $White;
+      border-right: 3px solid transparent;
+    }
+  }
+  &-m {
+    width: 32px;
+    height: 32px;
+    border: 4.5px solid $PrimaryColor;
+    border-right: 4.5px solid transparent;
+    &.white {
+      border: 4.5px solid $White;
+      border-right: 4.5px solid transparent;
+    }
+  }
+  &-l {
+    width: 48px;
+    height: 48px;
+    border: 6px solid $PrimaryColor;
+    border-right: 6px solid transparent;
+    &.white {
+      border: 6px solid $White;
+      border-right: 6px solid transparent;
+    }
+  }
+}
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

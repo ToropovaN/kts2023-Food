@@ -1,4 +1,4 @@
-@import "../../styles/variables.scss";
+@import "styles/variables.scss";
 
 .input {
   padding: 10px 19px;
@@ -6,7 +6,7 @@
   border: none;
   outline: none;
   border-radius: 7px;
-  background: -webkit-linear-gradient(0deg, $Grabient-A 0%, $Grabient-B 100%);
+  background: -webkit-linear-gradient(0deg, $Gradient-A 0%, $Gradient-B 100%);
   font-family: "Avenir";
   font-size: 12px;
   &::placeholder {
@@ -16,15 +16,15 @@
   &:focus {
     background: -webkit-linear-gradient(
       0deg,
-      $GrabientFocus-A 0%,
-      $GrabientFocus-B 100%
+      $GradientFocus-A 0%,
+      $GradientFocus-B 100%
     );
   }
   &:disabled {
     background: -webkit-linear-gradient(
       0deg,
-      $GrabientDisabled-A 0%,
-      $GrabientDisabled-B 100%
+      $GradientDisabled-A 0%,
+      $GradientDisabled-B 100%
     );
   }
 }

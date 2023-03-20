@@ -1,26 +1,21 @@
 import React, { createContext, useContext } from "react";
 
 import { Navigate, Route, Routes } from "react-router-dom";
-import QueryStore from "store/QueryStore/QueryStore";
-import RecipesStore from "store/RecipesStore/RecipesStore";
+import { rootStore } from "store/RootStore/RootStore";
 
 import DetailRecipe from "./pages/DetailRecipe/DetailRecipe";
 import Favourites from "./pages/Favourites/Favourites";
 import RecipesList from "./pages/RecipesList/RecipesList";
 
-export const recipesStore = new RecipesStore();
-export const queryStore = new QueryStore();
-
 const AppContext = createContext({
-  recipesStore,
-  queryStore,
+  rootStore,
 });
 const Provider = AppContext.Provider;
 export const useAppContext = () => useContext(AppContext);
 
 function App() {
   return (
-    <Provider value={{ recipesStore, queryStore }}>
+    <Provider value={{ rootStore }}>
       <div className="page">
         <Routes>
           <Route path="/recipes" element={<RecipesList />} />

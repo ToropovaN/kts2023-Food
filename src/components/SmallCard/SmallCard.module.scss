@@ -1,4 +1,5 @@
-@import "../../styles/variables.scss";
+@import "styles/variables.scss";
+@import "styles/mixins.scss";
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@700&display=swap");
 
 .smallCard {
@@ -24,22 +25,18 @@
     }
   }
   &_imgBlock {
+    @include flex;
     height: 60px;
     width: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
   &_img {
     max-width: 90%;
     max-height: 90%;
   }
   &_title {
+    @include flex;
     color: $TextPlaceholderColor;
     text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 30px;
     line-height: 120%;
     overflow: hidden;
@@ -58,8 +55,8 @@
     border-top: none;
     background: -webkit-linear-gradient(
       -90deg,
-      $GrabientDisabled-A 0%,
-      $GrabientDisabled-B 100%
+      $GradientDisabled-A 0%,
+      $GradientDisabled-B 100%
     );
     color: $TextLightColor;
     width: calc(100% - 14px);

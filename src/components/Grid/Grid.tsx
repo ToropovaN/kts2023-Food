@@ -12,7 +12,7 @@ export type GridProps = {
   list: RecipesListModel[];
 };
 const Grid = ({ list }: GridProps) => {
-  const recipesStore = useAppContext().recipesStore;
+  const recipesStore = useAppContext().rootStore.recipesStore;
   const navigate = useNavigate();
   const onClick = useCallback(
     (id: string) => {

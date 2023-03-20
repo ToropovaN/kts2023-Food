@@ -1,8 +1,8 @@
+@import "styles/mixins.scss";
+
 .notFound {
+  @include flex;
   height: 200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 @media (max-width: 374px) {

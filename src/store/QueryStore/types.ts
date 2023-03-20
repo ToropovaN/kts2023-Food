@@ -14,9 +14,20 @@ export type QueryParams = {
   sortDirection?: string;
 };
 
-export type SetQueryParamData =
-  | { param: "query"; value: string }
-  | { param: "cuisines"; value: Option[] }
-  | { param: "page"; value: number }
-  | { param: "sort"; value: Option }
-  | { param: "ascSortDir"; value: boolean };
+export type SetQueryParamData = {
+  query?: string;
+  cuisines?: Option[];
+  page?: number;
+  sort?: Option;
+  ascSortDir?: boolean;
+};
+
+export const QueryParamsFromSet = (set: SetQueryParamData): QueryParams => {
+  return {
+    query: set.query,
+    cuisine: set.cuisines?.map((c) => c.key).join(","),
+    page: set.page,
+    sort: set.sort?.key,
+    sortDirection: set.ascSortDir ? "asc" : "",
+  };
+};

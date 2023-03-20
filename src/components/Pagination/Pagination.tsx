@@ -26,13 +26,13 @@ const Pagination = ({ current, total, onChange }: PaginationProps) => (
       <InputNumber
         max={total}
         placeholder={current}
-        label={`of ${total}`}
+        label={total === 0 ? "of 1" : `of ${total}`}
         enter={(page: number) => onChange(page - 1)}
       ></InputNumber>
     </div>
     <Button
       onClick={(e) => onChange(current)}
-      disabled={current === total}
+      disabled={current === total || total === 0}
       className={classNames(
         styles.pagination_button,
         styles["pagination_button-forward"]

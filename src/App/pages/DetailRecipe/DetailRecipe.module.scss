@@ -1,4 +1,5 @@
-@import "../../../styles/variables.scss";
+@import "styles/variables.scss";
+@import "styles/mixins.scss";
 
 .detailRecipe {
   &_backButton,
@@ -28,14 +29,16 @@
     position: fixed;
   }
   &_imageLoading {
+    @include flex;
     background: -webkit-linear-gradient(
       -90deg,
-      $GrabientDisabled-A 0%,
-      $GrabientDisabled-B 100%
+      $GradientDisabled-A 0%,
+      $GradientDisabled-B 100%
     );
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  }
+  &_imageError {
+    @include flex;
+    background: -webkit-linear-gradient(-90deg, $White 0%, $Gradient-A 100%);
   }
   &_content {
     position: relative;

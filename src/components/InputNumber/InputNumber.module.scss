@@ -1,4 +1,4 @@
-@import "../../styles/variables.scss";
+@import "styles/variables.scss";
 
 .inputNumber {
   display: flex;
@@ -13,7 +13,7 @@
     padding: 6px 6px;
     margin-right: 6px;
     width: 24px;
-    background: -webkit-linear-gradient(0deg, $Grabient-A 0%, $Grabient-B 100%);
+    background: -webkit-linear-gradient(0deg, $Gradient-A 0%, $Gradient-B 100%);
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
       -webkit-appearance: none;
@@ -28,8 +28,8 @@
     &:focus {
       background: -webkit-linear-gradient(
         0deg,
-        $GrabientFocus-A 0%,
-        $GrabientFocus-B 100%
+        $GradientFocus-A 0%,
+        $GradientFocus-B 100%
       );
     }
   }

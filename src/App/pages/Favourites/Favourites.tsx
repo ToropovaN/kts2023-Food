@@ -12,7 +12,7 @@ import { useAppContext } from "../../App";
 import styles from "./Favourites.module.scss";
 
 const Favourites = () => {
-  const queryStore = useAppContext().queryStore;
+  const queryStore = useAppContext().rootStore.queryStore;
   const navigate = useNavigate();
 
   const page =

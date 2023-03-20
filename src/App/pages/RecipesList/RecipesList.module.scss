@@ -1,4 +1,5 @@
-@import "../../../styles/variables.scss";
+@import "styles/variables.scss";
+@import "styles/mixins.scss";
 
 .recipesList {
   &_content {
@@ -34,10 +35,8 @@
     }
   }
   &_loading {
+    @include flex;
     height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 }
 

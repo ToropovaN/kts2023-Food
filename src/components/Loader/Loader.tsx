@@ -35,13 +35,15 @@ const Loader = ({
 }: LoaderProps) => (
   <>
     {loading && (
-      <div
-        className={classNames(
-          className && styles[className],
-          styles.loader,
-          styles["loader-" + size]
-        )}
-      ></div>
+      <div className={styles.loader_wrapper}>
+        <div
+          className={classNames(
+            className && styles[className],
+            styles.loader,
+            styles["loader-" + size]
+          )}
+        ></div>
+      </div>
     )}
   </>
 );

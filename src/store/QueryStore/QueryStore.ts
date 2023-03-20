@@ -1,3 +1,4 @@
+import Cuisines from "config/cuisineConfig";
 import Meta from "config/MetaConfig";
 import SearchExamples from "config/searchExamplesConfig";
 import SortBy from "config/sortConfig";
@@ -10,17 +11,17 @@ import {
   runInAction,
 } from "mobx";
 
-import { QueryParams, SetQueryParamData } from "./types";
+import { QueryParams, QueryParamsFromSet, SetQueryParamData } from "./types";
 
 type PrivateFields = "_query" | "_cuisines" | "_page" | "_sort" | "_ascSortDir";
 
 export default class QueryStore {
   //private readonly _apiKey: string = "28b96fa1642b4476a009370856802fc5";
   //private readonly _apiKey: string = "2b3ebd57937747a190f2244ab2423918";
-  //private readonly _apiKey: string = "990490df808e4307a3e4bf98147bbdfb";
+  private readonly _apiKey: string = "990490df808e4307a3e4bf98147bbdfb";
   //private readonly _apiKey: string = "fabcd272022f46da9d568d3a96b807b5";
   //private readonly _apiKey: string = "60626dc7d5f849c2acb8caaa7f487570";
-  private readonly _apiKey: string = "d782d0a8a41a4f1e862d7118dedee920";
+  //private readonly _apiKey: string = "d782d0a8a41a4f1e862d7118dedee920";
 
   private _query: string = "";
   private _exampleQuery: string = "";
@@ -83,7 +84,7 @@ export default class QueryStore {
     let result = "";
     runInAction(() => {
       result = this.createQueryString({
-        query: this._query,
+        query: this._query || this._exampleQuery,
         cuisine: this._cuisines.map((opt) => opt.value).join(","),
         page: this._page,
         sort: this._sort.value === SortBy[0].value ? "" : this._sort.value,
@@ -116,18 +117,13 @@ export default class QueryStore {
     return result;
   }
 
-  public setQueryParam = ({ param, value }: SetQueryParamData) => {
+  public setQueryParam = (data: SetQueryParamData) => {
     runInAction(() => {
-      if (param === "page") {
-        if (this._query === "") this._query = this._exampleQuery;
-        this._page = value;
-      } else {
-        this._page = 0;
-      }
-      if (param === "query") this._query = value;
-      if (param === "cuisines") this._cuisines = value;
-      if (param === "sort") this._sort = value;
-      if (param === "ascSortDir") this._ascSortDir = value;
+      if (data.page || data.page === 0) this._page = data.page;
+      if (data.query || data.query === "") this._query = data.query;
+      if (data.cuisines) this._cuisines = data.cuisines;
+      if (data.sort) this._sort = data.sort;
+      if (data.ascSortDir) this._ascSortDir = data.ascSortDir;
     });
   };
 
@@ -136,32 +132,22 @@ export default class QueryStore {
     meta: Meta,
     onUpdate: (queryString: string) => Promise<void>
   ) => {
-    if (
-      this.createQueryString(this.serializeQueryString(query)).slice(1) !==
-        this.appQueryString().slice(1) ||
-      meta === Meta.initial
-    ) {
+    if (meta !== Meta.loading) {
       const newData = this.serializeQueryString(query);
-
-      const newCuisines: Option[] = [];
-      if (newData["cuisine"]) {
-        newData["cuisine"].split(",").forEach((newCuisine) => {
-          newCuisines.push({
-            key: decodeURI(newCuisine),
-            value: decodeURI(newCuisine),
-          });
+      if (
+        this.createQueryString(QueryParamsFromSet(newData)).slice(1) !==
+          this.appQueryString().slice(1) ||
+        meta === Meta.initial
+      ) {
+        runInAction(() => {
+          this._query = newData.query || this._exampleQuery;
+          this._cuisines = newData.cuisines || [];
+          this._page = newData.page || 0;
+          this._sort = newData.sort || SortBy[0];
+          this._ascSortDir = newData.ascSortDir || false;
+          onUpdate(this.APIListQueryString());
         });
       }
-
-      runInAction(() => {
-        this._cuisines = newCuisines;
-        this._query = newData["query"] || "";
-        this._page = Number(newData["page"]) || 0;
-        this._sort =
-          SortBy.find((sort) => sort.value === newData["sort"]) || SortBy[0];
-        this._ascSortDir = newData["sortDirection"] === "asc" ? true : false;
-        onUpdate(this.APIListQueryString());
-      });
     }
   };
 
@@ -181,18 +167,41 @@ export default class QueryStore {
     return "?" + params.join("&");
   };
 
-  public serializeQueryString = (
-    queryString: string
-  ): Record<string, string> => {
+  public serializeQueryString = (queryString: string): SetQueryParamData => {
     if (queryString !== "") {
       const pairs = queryString.slice(1).split("&");
-      const result: Record<string, string> = {};
+      const result: SetQueryParamData = {};
       pairs.forEach((pair) => {
         const values = pair.split("=");
-        if (values[0] === "page")
-          values[1] =
-            Number(values[1]) - 1 > 0 ? String(Number(values[1]) - 1) : "";
-        if (values[0] && values[1]) result[values[0]] = decodeURI(values[1]);
+        switch (values[0]) {
+          case "page": {
+            result.page = Number(values[1]) - 1 > 0 ? Number(values[1]) - 1 : 0;
+            break;
+          }
+          case "cuisine": {
+            const newCuisines: Option[] = [];
+            values[1].split(",").forEach((cuisineToSearch) => {
+              const cuisine = Cuisines.find(
+                (c) => c.key === decodeURI(cuisineToSearch)
+              );
+              if (cuisine) newCuisines.push(cuisine);
+            });
+            result.cuisines = newCuisines;
+            break;
+          }
+          case "query": {
+            result.query = decodeURI(values[1]);
+            break;
+          }
+          case "sort": {
+            result.sort = SortBy.find((s) => s.key === decodeURI(values[1]));
+            break;
+          }
+          case "sortDirection": {
+            result.ascSortDir = values[1] === "asc" ? true : false;
+            break;
+          }
+        }
       });
       return result;
     } else return {};

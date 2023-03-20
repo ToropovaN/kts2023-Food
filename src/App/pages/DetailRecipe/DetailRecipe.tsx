@@ -9,6 +9,7 @@ import IconPlus from "components/Icons/IconPlus";
 import IconRecipeMark from "components/Icons/IconRecipeMark";
 import IconTime from "components/Icons/IconTime";
 import Loader, { LoaderSize } from "components/Loader/Loader";
+import NotFound from "components/NotFound/NotFound";
 import SmallCard from "components/SmallCard/SmallCard";
 import Meta from "config/MetaConfig";
 import { Option } from "config/types";
@@ -26,17 +27,21 @@ import styles from "./DetailRecipe.module.scss";
 const DetailRecipe = () => {
   const { id } = useParams<{ id: string }>();
 
-  const recipesStore = useAppContext().recipesStore;
-  const queryStore = useAppContext().queryStore;
+  const recipesStore = useAppContext().rootStore.recipesStore;
+  const queryStore = useAppContext().rootStore.queryStore;
   const navigate = useNavigate();
 
   const recipe = recipesStore.recipe;
-  const loading = !(recipe && recipesStore.meta === Meta.success);
+
+  const loading = recipesStore.meta === Meta.loading;
+  const error = recipesStore.meta === Meta.error;
+  const success = recipe && recipesStore.meta === Meta.success;
 
   if (
     id &&
     recipesStore.recipe?.id !== id &&
-    recipesStore.meta !== Meta.loading
+    recipesStore.meta !== Meta.loading &&
+    recipesStore.meta !== Meta.error
   )
     recipesStore.getRecipe(id, queryStore.APIDetailQueryString());
 
@@ -46,13 +51,12 @@ const DetailRecipe = () => {
         recipesStore.getRecipesList(queryStore.APIListQueryString());
     });
     navigate(-1);
-  }, [navigate, recipesStore, queryStore.APIListQueryString]);
+  }, [navigate, recipesStore, queryStore]);
 
   const findByCuisine = useCallback(
     (cuisine: Option) => {
       queryStore.setQueryParam({
-        param: "cuisines",
-        value: [cuisine],
+        cuisines: [cuisine],
       });
       navigate({
         pathname: "/recipes",
@@ -65,30 +69,31 @@ const DetailRecipe = () => {
 
   return (
     <div className={styles.detailRecipe}>
-      {!loading && (
-        <>
-          <Button className={styles.detailRecipe_backButton} onClick={goBack}>
-            <IconBack />
-          </Button>
-          <Button
-            className={styles.detailRecipe_favouriteButton}
-            onClick={() => recipesStore.setFavourite(recipe)}
-          >
-            {recipesStore.favourites.includes(recipe.id) ? (
-              <IconCheck stroke="#ff0000" />
-            ) : (
-              <IconPlus stroke="#ff0000" />
-            )}
-          </Button>
-        </>
+      {(success || error) && (
+        <Button className={styles.detailRecipe_backButton} onClick={goBack}>
+          <IconBack />
+        </Button>
       )}
-      {!loading ? (
+      {success && (
+        <Button
+          className={styles.detailRecipe_favouriteButton}
+          onClick={() => recipesStore.setFavourite(recipe)}
+        >
+          {recipesStore.favourites.includes(recipe.id) ? (
+            <IconCheck stroke="#ff0000" />
+          ) : (
+            <IconPlus stroke="#ff0000" />
+          )}
+        </Button>
+      )}
+      {success && (
         <img
           className={styles.detailRecipe_image}
           src={recipe.image}
           alt={recipe.title}
         />
-      ) : (
+      )}
+      {loading && (
         <div
           className={classNames(
             styles.detailRecipe_image,
@@ -96,6 +101,16 @@ const DetailRecipe = () => {
           )}
         >
           <Loader size={LoaderSize.l} className={"white"} />
+        </div>
+      )}
+      {error && (
+        <div
+          className={classNames(
+            styles.detailRecipe_image,
+            styles.detailRecipe_imageError
+          )}
+        >
+          <NotFound />
         </div>
       )}
 
@@ -111,7 +126,7 @@ const DetailRecipe = () => {
         </div>
 
         <div className={styles.detailRecipe_info}>
-          {!loading ? (
+          {success && (
             <>
               <h1>{recipe.title}</h1>
               {recipe.marks.length ? (
@@ -195,9 +210,8 @@ const DetailRecipe = () => {
                 </>
               )}
             </>
-          ) : (
-            <Skeleton />
           )}
+          {loading && <Skeleton />}
         </div>
       </div>
     </div>

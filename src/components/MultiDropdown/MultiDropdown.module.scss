@@ -1,4 +1,4 @@
-@import "../../styles/variables.scss";
+@import "styles/variables.scss";
 
 .multi-dropdown {
   cursor: pointer;
@@ -24,13 +24,13 @@
     display: block;
     width: calc(100% - 38px);
     padding: 10px 19px;
-    background: -webkit-linear-gradient(0deg, $Grabient-A 0%, $Grabient-B 100%);
+    background: -webkit-linear-gradient(0deg, $Gradient-A 0%, $Gradient-B 100%);
     margin-bottom: 3px;
     &-disabled {
       background: -webkit-linear-gradient(
         0deg,
-        $GrabientDisabled-A 0%,
-        $GrabientDisabled-B 100%
+        $GradientDisabled-A 0%,
+        $GradientDisabled-B 100%
       );
       color: $TextLightColor;
     }

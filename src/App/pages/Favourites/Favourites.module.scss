@@ -1,4 +1,4 @@
-@import "../../../styles/variables.scss";
+@import "styles/variables.scss";
 
 .favourites {
   &_content {
@@ -12,7 +12,7 @@
     font-weight: 500;
     line-height: 136%;
     color: $PrimaryColor;
-    border-bottom: 3px dotted $Grabient-B;
+    border-bottom: 3px dotted $Gradient-B;
     margin: 44px 0;
     padding: 0 24px 5px 24px;
   }

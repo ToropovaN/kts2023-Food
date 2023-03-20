@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 
 import Button from "components/Button/Button";
 import IconSearch from "components/Icons/IconSearch";
@@ -10,26 +10,36 @@ import { useAppContext } from "../../../../App";
 import styles from "./Search.module.scss";
 
 const Search = () => {
-  const recipesStore = useAppContext().recipesStore;
-  const queryStore = useAppContext().queryStore;
+  const recipesStore = useAppContext().rootStore.recipesStore;
+  const queryStore = useAppContext().rootStore.queryStore;
   const navigate = useNavigate();
 
-  const onChange = (newStr: string) => {
-    queryStore.setQueryParam({ param: "query", value: newStr });
+  const onChange = useCallback(
+    (newStr: string) => {
+      queryStore.setQueryParam({ query: newStr });
+      navigate({
+        pathname: "",
+        search: queryStore.appQueryString(),
+      });
+    },
+    [queryStore, navigate]
+  );
+
+  const startSearch = useCallback(() => {
+    queryStore.setQueryParam({ page: 0 });
     navigate({
       pathname: "",
       search: queryStore.appQueryString(),
     });
-  };
-
-  const startSearch = () => {
     recipesStore.getRecipesList(queryStore.APIListQueryString());
-  };
+  }, [recipesStore, queryStore, navigate]);
 
   return (
     <div className={styles.search}>
       <Input
-        value={queryStore.query}
+        value={
+          queryStore.query === queryStore.exampleQuery ? "" : queryStore.query
+        }
         placeholder={"For example: " + queryStore.exampleQuery}
         onChange={onChange}
         enter={startSearch}

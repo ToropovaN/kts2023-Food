@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 
 import classNames from "classnames";
 import BookButton, { BookButtonOffset } from "components/BookButton/BookButton";
@@ -24,8 +24,8 @@ import Search from "./components/Search/Search";
 import styles from "./RecipesList.module.scss";
 
 const RecipesList = () => {
-  const recipesStore = useAppContext().recipesStore;
-  const queryStore = useAppContext().queryStore;
+  const recipesStore = useAppContext().rootStore.recipesStore;
+  const queryStore = useAppContext().rootStore.queryStore;
   const navigate = useNavigate();
 
   queryStore.setStoreFromQueryString(
@@ -33,6 +33,13 @@ const RecipesList = () => {
     recipesStore.meta,
     recipesStore.getRecipesList
   );
+
+  useEffect(() => {
+    navigate({
+      pathname: "",
+      search: queryStore.appQueryString(),
+    });
+  }, [queryStore, navigate]);
 
   const queryOnChange = useCallback(
     (data: SetQueryParamData) => {
@@ -59,7 +66,7 @@ const RecipesList = () => {
               options={Cuisines}
               value={queryStore.cuisines}
               onChange={(cuisines) => {
-                queryOnChange({ param: "cuisines", value: cuisines });
+                queryOnChange({ cuisines: cuisines });
               }}
               pluralizeOptions={(value) => {
                 if (value.length === 0) return "Pick cuisines";
@@ -77,8 +84,7 @@ const RecipesList = () => {
                 onClick={() =>
                   runInAction(() => {
                     queryOnChange({
-                      param: "ascSortDir",
-                      value: !queryStore.ascSortDir,
+                      ascSortDir: !queryStore.ascSortDir,
                     });
                   })
                 }
@@ -89,9 +95,7 @@ const RecipesList = () => {
               <Dropdown
                 value={queryStore.sort}
                 options={SortBy}
-                onChange={(sort) =>
-                  queryOnChange({ param: "sort", value: sort })
-                }
+                onChange={(sort) => queryOnChange({ sort: sort })}
                 pluralizeOptions={(value) => "by " + value.value}
               ></Dropdown>
             </div>
@@ -116,7 +120,7 @@ const RecipesList = () => {
               current={queryStore.page + 1}
               total={Math.ceil(recipesStore.totalResults / queryStore.perPage)}
               onChange={(page) => {
-                queryOnChange({ param: "page", value: page });
+                queryOnChange({ page: page });
               }}
             />
           </>

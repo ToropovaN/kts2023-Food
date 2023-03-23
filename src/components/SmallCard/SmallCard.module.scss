@@ -32,6 +32,7 @@
   &_img {
     max-width: 90%;
     max-height: 90%;
+    object-fit: scale-down;
   }
   &_title {
     @include flex;

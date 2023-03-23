@@ -16,9 +16,9 @@ import { QueryParams, QueryParamsFromSet, SetQueryParamData } from "./types";
 type PrivateFields = "_query" | "_cuisines" | "_page" | "_sort" | "_ascSortDir";
 
 export default class QueryStore {
-  //private readonly _apiKey: string = "28b96fa1642b4476a009370856802fc5";
+  private readonly _apiKey: string = "28b96fa1642b4476a009370856802fc5";
   //private readonly _apiKey: string = "2b3ebd57937747a190f2244ab2423918";
-  private readonly _apiKey: string = "990490df808e4307a3e4bf98147bbdfb";
+  //private readonly _apiKey: string = "990490df808e4307a3e4bf98147bbdfb";
   //private readonly _apiKey: string = "fabcd272022f46da9d568d3a96b807b5";
   //private readonly _apiKey: string = "60626dc7d5f849c2acb8caaa7f487570";
   //private readonly _apiKey: string = "d782d0a8a41a4f1e862d7118dedee920";
@@ -123,7 +123,9 @@ export default class QueryStore {
       if (data.query || data.query === "") this._query = data.query;
       if (data.cuisines) this._cuisines = data.cuisines;
       if (data.sort) this._sort = data.sort;
-      if (data.ascSortDir) this._ascSortDir = data.ascSortDir;
+      if (data.ascSortDir === true || data.ascSortDir === false) {
+        this._ascSortDir = data.ascSortDir;
+      }
     });
   };
 

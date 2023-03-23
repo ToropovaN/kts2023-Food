@@ -50,7 +50,10 @@ const DetailRecipe = () => {
       if (recipesStore.list.length === 0)
         recipesStore.getRecipesList(queryStore.APIListQueryString());
     });
-    navigate(-1);
+    navigate({
+      pathname: "/recipes",
+      search: queryStore.appQueryString(),
+    });
   }, [navigate, recipesStore, queryStore]);
 
   const findByCuisine = useCallback(

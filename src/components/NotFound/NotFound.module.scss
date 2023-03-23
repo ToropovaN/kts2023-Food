@@ -1,0 +1,12 @@
+@import "styles/mixins.scss";
+
+.notFound {
+  @include flex;
+  height: 200px;
+}
+
+@media (max-width: 374px) {
+  .notFound > svg {
+    height: 120px;
+  }
+}

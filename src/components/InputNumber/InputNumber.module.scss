@@ -1,0 +1,36 @@
+@import "styles/variables.scss";
+
+.inputNumber {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: $TextLightColor;
+  &_input {
+    text-align: center;
+    border: none;
+    outline: none;
+    border-radius: 7px;
+    padding: 6px 6px;
+    margin-right: 6px;
+    width: 24px;
+    background: -webkit-linear-gradient(0deg, $Gradient-A 0%, $Gradient-B 100%);
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    -moz-appearance: textfield;
+    appearance: textfield;
+    &::placeholder {
+      color: $TextPlaceholderColor;
+      opacity: 0.5;
+    }
+    &:focus {
+      background: -webkit-linear-gradient(
+        0deg,
+        $GradientFocus-A 0%,
+        $GradientFocus-B 100%
+      );
+    }
+  }
+}

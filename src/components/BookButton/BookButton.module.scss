@@ -1,0 +1,54 @@
+@import "styles/variables.scss";
+@import "styles/mixins.scss";
+
+.bookButton {
+  @include flex;
+  position: fixed;
+  transform: translateX(-50%);
+  left: 50%;
+  bottom: 40px;
+  padding: 10px;
+  border-radius: 50%;
+  outline-offset: 3px;
+  outline: 1px solid $PrimaryColor;
+  &:hover {
+    outline-offset: 6px;
+    outline: 1px solid $GradientFocus-A;
+  }
+  & > svg {
+    width: 50px;
+    height: 50px;
+  }
+  &_background {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+    opacity: 0.8;
+    background-color: $Gradient-A;
+  }
+  &_offset {
+    height: 100px;
+  }
+}
+
+@media (min-width: 719px) {
+  .bookButton_background {
+    width: 719px;
+  }
+}
+@media (min-width: 547px) and (max-width: 719px) {
+  .bookButton_background {
+    width: 547px;
+  }
+}
+@media (min-width: 375px) and (max-width: 546px) {
+  .bookButton_background {
+    width: 375px;
+  }
+}
+@media (max-width: 374px) {
+  .bookButton_background {
+    width: 203px;
+  }
+}

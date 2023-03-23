@@ -1,0 +1,85 @@
+@import "./variables.scss";
+@import "./mixins.scss";
+@import "./fonts";
+
+html {
+  margin: 0;
+}
+body {
+  margin: 0;
+  background-color: $Background;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+a {
+  color: $PrimaryColor;
+}
+ol {
+  list-style-type: none;
+  padding-left: 24px;
+}
+li {
+  font-size: 12px;
+  line-height: 18px;
+  counter-increment: step-counter;
+  margin-bottom: 14px;
+  position: relative;
+  padding-left: 24px;
+}
+li::before {
+  @include flex;
+  height: 18px;
+  width: 18px;
+  position: absolute;
+  left: -5px;
+  content: counter(step-counter);
+  background-color: $GradientFocus-A;
+  color: $PrimaryColor;
+  border-radius: 50%;
+}
+
+.page {
+  overflow: hidden;
+  margin: auto;
+  font-family: "Avenir";
+  font-weight: 500;
+  min-width: 203px;
+  background-color: $White;
+  box-shadow: 0px 0px 30px $ShadowColor;
+  & > div {
+    position: relative;
+    padding: 0;
+    min-height: 100vh;
+    overflow-y: auto;
+  }
+}
+
+@media (min-width: 719px) {
+  .page {
+    width: 719px;
+  }
+  //(4col)
+}
+
+@media (min-width: 547px) and (max-width: 719px) {
+  .page {
+    width: 547px;
+  }
+  //(3col)
+}
+
+@media (min-width: 375px) and (max-width: 546px) {
+  .page {
+    width: 375px;
+  }
+  //(2col)
+}
+
+@media (max-width: 374px) {
+  .page {
+    width: 203px;
+  }
+  //(1col)
+}

@@ -1,0 +1,70 @@
+@import "styles/variables.scss";
+
+.dropdown {
+  cursor: pointer;
+  color: $TextLightColor;
+  font-weight: 400;
+  font-family: "Avenir";
+  font-size: 12px;
+  position: relative;
+  letter-spacing: 0.01em;
+  &:hover > &_list {
+    display: block;
+  }
+  &_label {
+    border-radius: 7px;
+    display: block;
+    padding: 10px 5px;
+    margin-bottom: 3px;
+    &-disabled {
+      background-color: $SecondaryColor;
+    }
+  }
+  &_labelText {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  &_list {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 182px;
+    overflow: scroll;
+    border-radius: 7px;
+    overflow: hidden;
+    background-color: $White;
+    box-shadow: 0px 0px 10px $ShadowColor;
+    &:hover {
+      width: calc(100% + 10px);
+    }
+  }
+  &_scroll {
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    &::-webkit-scrollbar {
+      background-color: $Background;
+      width: 0px;
+    }
+    &:hover {
+      &::-webkit-scrollbar {
+        width: 10px;
+      }
+      &::-webkit-scrollbar-thumb {
+        border: 4px solid transparent;
+        border-radius: 5px;
+        box-shadow: $TextLightColor inset 0 0 0 10px;
+      }
+    }
+  }
+  &_option {
+    padding: 10px;
+    display: block;
+    overflow: hidden;
+    &-chacked {
+      background-color: $SecondaryColor;
+    }
+  }
+}

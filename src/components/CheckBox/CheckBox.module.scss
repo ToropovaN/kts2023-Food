@@ -1,0 +1,42 @@
+@import "styles/variables.scss";
+.checkbox {
+  &_input {
+    display: none;
+    &:checked + label > svg {
+      opacity: 0;
+    }
+    &:disabled + label {
+      background: -webkit-linear-gradient(
+        0deg,
+        $GrabientDisabled-A 0%,
+        $GrabientDisabled-B 100%
+      );
+      & > svg > line {
+        stroke: $TextLightColor;
+      }
+    }
+  }
+  &_label {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 7px;
+    background: -webkit-linear-gradient(
+      0deg,
+      $Grabient-B 0%,
+      $GrabientFocus-B 100%
+    );
+    &:hover {
+      background: -webkit-linear-gradient(
+        0deg,
+        $Grabient-B 0%,
+        $GrabientFocus-B 100%
+      );
+    }
+  }
+  &_mark {
+    position: relative;
+    top: -2px;
+    left: 4px;
+  }
+}
